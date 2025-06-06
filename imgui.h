@@ -77,6 +77,7 @@ Index of this file:
 #include <stdarg.h>                 // va_list, va_start, va_end
 #include <stddef.h>                 // ptrdiff_t, NULL
 #include <string.h>                 // memset, memmove, memcpy, strlen, strchr, strcpy, strcmp
+#include <functional>               // function
 
 // Define attributes of all API symbols declarations (e.g. for DLL under Windows)
 // IMGUI_API is used for core imgui functions, IMGUI_IMPL_API is used for the default backends files (imgui_impl_xxx.h)
@@ -272,10 +273,10 @@ typedef ImWchar16 ImWchar;
 typedef ImS64 ImGuiSelectionUserData;
 
 // Callback and functions types
-typedef int     (*ImGuiInputTextCallback)(ImGuiInputTextCallbackData* data);    // Callback function for ImGui::InputText()
-typedef void    (*ImGuiSizeCallback)(ImGuiSizeCallbackData* data);              // Callback function for ImGui::SetNextWindowSizeConstraints()
-typedef void*   (*ImGuiMemAllocFunc)(size_t sz, void* user_data);               // Function signature for ImGui::SetAllocatorFunctions()
-typedef void    (*ImGuiMemFreeFunc)(void* ptr, void* user_data);                // Function signature for ImGui::SetAllocatorFunctions()
+using ImGuiInputTextCallback = std::function<int  (ImGuiInputTextCallbackData* data)>;    // Callback function for ImGui::InputText()
+using ImGuiSizeCallback = std::function<void (ImGuiSizeCallbackData* data)>;              // Callback function for ImGui::SetNextWindowSizeConstraints()
+using ImGuiMemAllocFunc = std::function<void*(size_t sz, void* user_data)>;               // Function signature for ImGui::SetAllocatorFunctions()
+using ImGuiMemFreeFunc = std::function<void (void* ptr, void* user_data)>;                // Function signature for ImGui::SetAllocatorFunctions()
 
 // ImVec2: 2D vector used to store positions, sizes etc. [Compile-time configurable type]
 // - This is a frequently used type in the API. Consider using IM_VEC2_CLASS_EXTRA to create implicit cast from/to our preferred type.
