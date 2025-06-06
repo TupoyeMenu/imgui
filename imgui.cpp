@@ -4994,7 +4994,7 @@ float ImGui::CalcWrapWidthForPos(const ImVec2& pos, float wrap_pos_x)
 // IM_ALLOC() == ImGui::MemAlloc()
 void* ImGui::MemAlloc(size_t size)
 {
-    void* ptr = (*GImAllocatorAllocFunc)(size, GImAllocatorUserData);
+    void* ptr = GImAllocatorAllocFunc(size, GImAllocatorUserData);
 #ifndef IMGUI_DISABLE_DEBUG_TOOLS
     if (ImGuiContext* ctx = GImGui)
         DebugAllocHook(&ctx->DebugAllocInfo, ctx->FrameCount, ptr, size);
@@ -5010,7 +5010,7 @@ void ImGui::MemFree(void* ptr)
         if (ImGuiContext* ctx = GImGui)
             DebugAllocHook(&ctx->DebugAllocInfo, ctx->FrameCount, ptr, (size_t)-1);
 #endif
-    return (*GImAllocatorFreeFunc)(ptr, GImAllocatorUserData);
+    return GImAllocatorFreeFunc(ptr, GImAllocatorUserData);
 }
 
 // We record the number of allocation in recent frames, as a way to audit/sanitize our guiding principles of "no allocations on idle/repeating frames"
